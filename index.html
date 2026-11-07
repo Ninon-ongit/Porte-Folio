@@ -1,132 +1,821 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Ninon — Portfolio d’architecture</title>
-<style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
---bg:#f4f1ec;--fg:#1d1b18;--mut:#7a746b;--line:#d8d2c8;--ph1:#cfc6b8;--ph2:#b9ae9c;--acc:#9a5b3c}
-html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171513;--fg:#ece7df;--mut:#9b9488;--line:#34302b;--ph1:#2c2823;--ph2:#3b352e;--acc:#d08a63;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#171513;--fg:#ece7df;--mut:#9b9488;--line:#34302b;--ph1:#2c2823;--ph2:#3b352e;--acc:#d08a63;color-scheme:dark}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 "Helvetica Neue",Helvetica,Arial,sans-serif}
-a{color:inherit;text-decoration:none}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;justify-content:space-between;align-items:center;padding:18px 5vw;background:var(--bg);border-bottom:1px solid var(--line)}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
-.logo{font-weight:700;letter-spacing:.3em;font-size:15px}
-nav{display:flex;gap:28px;font-size:12px;letter-spacing:.18em}
-nav a:hover{color:var(--acc)}
-.hero{padding:12vh 5vw 8vh;max-width:1100px}
-.hero h1{font-size:clamp(34px,6vw,72px);line-height:1.05;font-weight:300;margin:0 0 24px;letter-spacing:-.01em}
-.hero .tags{font-size:12px;letter-spacing:.22em;color:var(--acc);margin-bottom:20px}
-.hero p{max-width:520px;color:var(--mut);margin:0}
-.filters{display:flex;flex-wrap:wrap;gap:8px 26px;padding:0 5vw 28px;font-size:12px;letter-spacing:.18em}
-.filters button{background:none;border:0;border-bottom:1px solid transparent;color:var(--mut);font:inherit;letter-spacing:inherit;padding:4px 0;cursor:pointer}
-.filters button.on,.filters button:hover{color:var(--fg);border-bottom-color:var(--acc)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:34px 24px;padding:0 5vw 10vh}
-.card.hide{display:none}
-.ph{aspect-ratio:4/5;background:linear-gradient(135deg,var(--ph1),var(--ph2));display:flex;align-items:flex-end;padding:14px;font-size:11px;letter-spacing:.2em;color:var(--mut);transition:transform .4s}
-.card:hover .ph{transform:scale(.98)}
-.card h3{margin:14px 0 2px;font-size:14px;letter-spacing:.16em;font-weight:600}
-.card p{margin:0;font-size:13px;color:var(--mut)}
-section.pad{padding:10vh 5vw;border-top:1px solid var(--line)}
-section h2{font-size:12px;letter-spacing:.3em;color:var(--acc);margin:0 0 30px;font-weight:600}
-.about{display:grid;grid-template-columns:minmax(220px,1fr) 2fr;gap:5vw;align-items:start}
-.about .ph{aspect-ratio:3/4}
-.about p{margin:0 0 16px;max-width:620px}
-.skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px;padding:0;list-style:none}
-.skills li{border:1px solid var(--line);padding:5px 14px;font-size:12px;letter-spacing:.08em;border-radius:99px}
-.contact a.big{font-size:clamp(22px,4vw,44px);font-weight:300;border-bottom:1px solid var(--acc)}
-.contact ul{list-style:none;padding:0;margin:30px 0 0;display:flex;gap:28px;font-size:12px;letter-spacing:.18em}
-footer{padding:28px 5vw;border-top:1px solid var(--line);font-size:12px;color:var(--mut);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-@media (max-width:700px){nav{gap:16px}.about{grid-template-columns:1fr}}
-</style>
+
+  <meta charset="utf-8">
+
+  <!-- Indispensable pour que la page s’adapte aux écrans de téléphone et de tablette -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <title>Ninon — Portfolio d’architecture</title>
+
+
+  <style>
+
+    /* ==========================================
+       1. COULEURS ET MESURES
+          (à modifier ici en un seul endroit)
+       ========================================== */
+
+    :root {
+
+      /* Couleurs */
+      --fond:         #ffffff;   /* fond de la page */
+      --texte:        #000000;   /* texte principal */
+      --texte-doux:   #242323;   /* texte secondaire */
+      --ligne:        #2a2826;   /* traits de séparation */
+      --accent:       #000000;   /* couleur d’accent */
+      --image-1:      #1c1a18;   /* dégradé des images provisoires */
+      --image-2:      #2d2924;
+      --texte-image:  #cfc9c0;   /* texte écrit sur les images provisoires */
+
+      /* Marge latérale : 20px minimum sur téléphone, 64px maximum sur grand écran */
+      --marge: clamp(20px, 5vw, 64px);
+
+      /* Marges de sécurité (encoches des téléphones en mode paysage) */
+      --gauche: max(var(--marge), env(safe-area-inset-left, 0px));
+      --droite: max(var(--marge), env(safe-area-inset-right, 0px));
+
+      /* Hauteur de l’en-tête */
+      --hauteur-entete: 64px;
+    }
+
+
+    /* ==========================================
+       2. BASE DE LA PAGE
+       ========================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+
+      /* Le titre fixe ne cache pas le haut des sections quand on clique sur le menu */
+      scroll-padding-top: var(--hauteur-entete);
+
+      /* Empêche le téléphone d’agrandir le texte tout seul */
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fond);
+      color: var(--texte);
+      font: 16px/1.6 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+
+    /* ==========================================
+       3. EN-TÊTE ET MENU
+       ========================================== */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      min-height: var(--hauteur-entete);
+      padding: 0 var(--droite) 0 var(--gauche);
+
+      background: var(--fond);
+      border-bottom: 1px solid var(--ligne);
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.3em;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+    }
+
+    nav a:focus-visible,
+    .logo:focus-visible,
+    .menu-bouton:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+
+    /* --- Bouton « burger » (caché sur ordinateur) --- */
+
+    .menu-bouton {
+      display: none;
+
+      position: relative;
+      width: 44px;
+      height: 44px;
+      margin-right: -10px;
+
+      background: none;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .menu-bouton span {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      height: 2px;
+
+      background: var(--texte);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .menu-bouton span:nth-child(1) { top: 15px; }
+    .menu-bouton span:nth-child(2) { top: 21px; }
+    .menu-bouton span:nth-child(3) { top: 27px; }
+
+    /* Quand le menu est ouvert, les 3 traits forment une croix */
+    header.ouvert .menu-bouton span:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    header.ouvert .menu-bouton span:nth-child(2) {
+      opacity: 0;
+    }
+
+    header.ouvert .menu-bouton span:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+
+    /* ==========================================
+       4. PRÉSENTATION (grand titre)
+       ========================================== */
+
+    .hero {
+      max-width: 1100px;
+      padding: clamp(56px, 12vh, 140px) var(--droite) clamp(40px, 8vh, 96px) var(--gauche);
+    }
+
+    .hero .tags {
+      margin-bottom: 20px;
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      line-height: 1.8;
+      color: var(--accent);
+    }
+
+    .hero h1 {
+      margin: 0 0 24px;
+      font-size: clamp(32px, 6vw, 72px);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      overflow-wrap: break-word;
+    }
+
+    .hero p {
+      max-width: 520px;
+      margin: 0;
+      color: var(--texte-doux);
+    }
+
+
+    /* ==========================================
+       5. FILTRES DES PROJETS
+       ========================================== */
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 26px;
+
+      padding: 0 var(--droite) 20px var(--gauche);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+    }
+
+    .filters button {
+      /* Zone cliquable d’au moins 44px de haut : confortable au doigt */
+      min-height: 44px;
+      padding: 0;
+
+      background: none;
+      border: 0;
+      border-bottom: 1px solid transparent;
+
+      color: var(--texte-doux);
+      font: inherit;
+      letter-spacing: inherit;
+      cursor: pointer;
+    }
+
+    .filters button.on {
+      color: var(--texte);
+      border-bottom-color: var(--accent);
+    }
+
+
+    /* ==========================================
+       6. GRILLE DES PROJETS
+       ========================================== */
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);   /* ordinateur : 3 colonnes */
+      gap: 40px 24px;
+
+      padding: 0 var(--droite) clamp(56px, 10vh, 120px) var(--gauche);
+    }
+
+    .card {
+      display: block;
+    }
+
+    .card.hide {
+      display: none;
+    }
+
+    .card h3 {
+      margin: 14px 0 2px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      overflow-wrap: break-word;
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 13px;
+      color: var(--texte-doux);
+    }
+
+    /* Emplacement des images (remplacé plus tard par tes photos) */
+    .ph {
+      display: flex;
+      align-items: flex-end;
+
+      aspect-ratio: 4 / 5;
+      padding: 14px;
+
+      background: linear-gradient(135deg, var(--image-1), var(--image-2));
+      color: var(--texte-image);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+
+      transition: transform 0.4s;
+    }
+
+
+    /* ==========================================
+       7. SECTIONS « À PROPOS » ET « CONTACT »
+       ========================================== */
+
+    section.pad {
+      padding: clamp(56px, 10vh, 120px) var(--droite) clamp(56px, 10vh, 120px) var(--gauche);
+      border-top: 1px solid var(--ligne);
+    }
+
+    section h2 {
+      margin: 0 0 30px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      color: var(--accent);
+    }
+
+
+    /* --- À propos --- */
+
+    .about {
+      display: grid;
+      grid-template-columns: minmax(200px, 1fr) 2fr;
+      gap: clamp(24px, 5vw, 64px);
+      align-items: start;
+    }
+
+    .about .ph {
+      aspect-ratio: 3 / 4;
+    }
+
+    .about p {
+      max-width: 620px;
+      margin: 0 0 16px;
+    }
+
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      margin-top: 24px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .skills li {
+      padding: 5px 14px;
+
+      border: 1px solid var(--ligne);
+      border-radius: 99px;
+
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+
+    /* --- Contact --- */
+
+    .contact a.big {
+      display: inline-block;
+
+      font-size: clamp(18px, 4.6vw, 44px);
+      font-weight: 300;
+      line-height: 1.3;
+      border-bottom: 1px solid var(--accent);
+
+      /* L’adresse e-mail passe à la ligne au lieu de dépasser de l’écran */
+      overflow-wrap: anywhere;
+    }
+
+    .contact ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 28px;
+
+      margin: 20px 0 0;
+      padding: 0;
+      list-style: none;
+
+      font-size: 12px;
+      letter-spacing: 0.18em;
+    }
+
+    .contact ul a {
+      display: inline-block;
+      padding: 12px 0;       /* zone cliquable plus grande au doigt */
+    }
+
+
+    /* ==========================================
+       8. PIED DE PAGE
+       ========================================== */
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      padding: 28px var(--droite) max(28px, env(safe-area-inset-bottom, 0px)) var(--gauche);
+      border-top: 1px solid var(--ligne);
+
+      font-size: 12px;
+      color: var(--texte-doux);
+    }
+
+
+    /* ==========================================
+       9. EFFETS AU SURVOL
+          (uniquement sur ordinateur : pas de faux survol au doigt)
+       ========================================== */
+
+    @media (hover: hover) {
+
+      nav a:hover,
+      .contact ul a:hover {
+        color: var(--accent);
+        text-decoration: underline;
+        text-underline-offset: 6px;
+      }
+
+      .filters button:hover {
+        color: var(--texte);
+        border-bottom-color: var(--accent);
+      }
+
+      .card:hover .ph {
+        transform: scale(0.98);
+      }
+
+    }
+
+
+    /* ==========================================
+       10. TRÈS GRAND ÉCRAN (à partir de 1600px)
+       ========================================== */
+
+    @media (min-width: 1600px) {
+
+      .grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+    }
+
+
+    /* ==========================================
+       11. TABLETTE (jusqu’à 1024px)
+       ========================================== */
+
+    @media (max-width: 1024px) {
+
+      .grid {
+        grid-template-columns: repeat(2, 1fr);   /* 2 colonnes */
+        gap: 36px 20px;
+      }
+
+      .about {
+        grid-template-columns: 1fr 1.6fr;
+      }
+
+    }
+
+
+    /* ==========================================
+       12. TÉLÉPHONE (jusqu’à 700px)
+           Le menu devient un bouton « burger »
+       ========================================== */
+
+    @media (max-width: 700px) {
+
+      .logo {
+        font-size: 13px;
+        letter-spacing: 0.22em;
+      }
+
+      .menu-bouton {
+        display: block;
+      }
+
+      /* Le menu se déplie sous l’en-tête */
+      nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+
+        flex-direction: column;
+        gap: 0;
+
+        padding: 8px var(--droite) 16px var(--gauche);
+        background: var(--fond);
+        border-bottom: 1px solid var(--ligne);
+
+        font-size: 14px;
+
+        /* Caché par défaut */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: opacity 0.25s, transform 0.25s, visibility 0.25s;
+      }
+
+      header.ouvert nav {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      nav a {
+        padding: 16px 0;
+        border-bottom: 1px solid var(--ligne);
+      }
+
+      nav a:last-child {
+        border-bottom: 0;
+      }
+
+      /* Les projets s’affichent les uns sous les autres */
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .about .ph {
+        max-width: 320px;   /* portrait moins imposant sur téléphone */
+      }
+
+      footer {
+        flex-direction: column;
+      }
+
+    }
+
+
+    /* ==========================================
+       13. ACCESSIBILITÉ
+           Réduit les animations si la personne l’a demandé
+       ========================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      * {
+        transition: none !important;
+      }
+
+    }
+
+  </style>
+
 </head>
+
+
 <body>
-<header>
-  <a class="logo" href="#top">Ninon Lebrun-Billot</a>
-  <nav>
-    <a href="#realisations">RÉALISATIONS</a>
-    <a href="#apropos">À PROPOS</a>
-    <a href="#contact">CONTACT</a>
-  </nav>
-</header>
 
-<main id="top">
-  <div class="hero">
-    <div class="tags">ARCHITECTURE / MAQUETTE / DESSIN / RECHERCHE</div>
-    <h1>Étudiante en architecture, je donne forme aux idées.</h1>
-    <p>Un portfolio de projets académiques et personnels, entre conception, maquette et représentation. Découvrez l’essence de mon travail.</p>
-  </div>
+  <!-- ==========================================
+       EN-TÊTE
+       ========================================== -->
 
-  <div id="realisations">
-    <div class="filters" id="filters">
-      <button class="on" data-f="all">TOUS</button>
-      <button data-f="Architecture">ARCHITECTURE</button>
-      <button data-f="Maquette">MAQUETTE</button>
-      <button data-f="Dessin">DESSIN</button>
-      <button data-f="Recherche">RECHERCHE</button>
-    </div>
-    <div class="grid" id="grid"></div>
-  </div>
+  <header id="entete">
 
-  <section class="pad" id="apropos">
-    <h2>À PROPOS</h2>
-    <div class="about">
-      <div class="ph">PORTRAIT</div>
-      <div>
-        <p>Je m’appelle Ninon, étudiante en architecture à l’école de Malaquais. Ma pratique associe la réflexion conceptuelle et la fabrication manuelle : chaque projet est pour moi l’occasion d’explorer un lieu, une matière et un usage.</p>
-        <p>Je recherche actuellement un stage de 10000h à partir de hier.</p>
-        <ul class="skills">
-          <li>AutoCAD</li><li>Rhino</li><li>Revit</li><li>SketchUp</li><li>Adobe Suite</li><li>Maquette</li><li>Dessin à la main</li>
-        </ul>
+    <a class="logo" href="#top">Ninon Lebrun-Billot</a>
+
+    <!-- Bouton burger (visible uniquement sur téléphone) -->
+    <button class="menu-bouton" id="menu-bouton" type="button"
+            aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav id="menu">
+      <a href="#realisations">RÉALISATIONS</a>
+      <a href="#apropos">À PROPOS</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+
+  </header>
+
+
+  <main id="top">
+
+    <!-- ==========================================
+         PRÉSENTATION
+         ========================================== -->
+
+    <div class="hero">
+
+      <div class="tags">
+        ARCHITECTURE / MAQUETTE / DESSIN / RECHERCHE
       </div>
+
+      <h1>
+        Étudiante en architecture, je donne forme aux idées.
+      </h1>
+
+      <p>
+        Un portfolio de projets académiques et personnels,
+        entre conception, maquette et représentation.
+        Découvrez l’essence de mon travail.
+      </p>
+
     </div>
-  </section>
 
-  <section class="pad contact" id="contact">
-    <h2>CONTACT</h2>
-    <a class="big" href="mailto:prenom.nom@email.fr">Contact.Job.Ninon@gmail.com</a>
-    <ul>
-      <li><a href="#contact">INSTAGRAM</a></li>
-      <li><a href="#contact">LINKEDIN</a></li>
-      <li><a href="#contact">CV (PDF)</a></li>
-    </ul>
-  </section>
-</main>
 
-<footer>
-  <span>© Ninon porte folio2026</span>
-  <span>Mentions légales</span>
-</footer>
+    <!-- ==========================================
+         RÉALISATIONS (filtres + projets)
+         Les projets se modifient dans le <script> en bas
+         ========================================== -->
 
-<script>
-const projects=[
-  ["MAISON SUR PILOTIS","Architecture","Projet de studio, L3","09.2026"],
-  ["BIBLIOTHÈQUE DE QUARTIER","Architecture","Projet de studio, M1","06.2026"],
-  ["MAQUETTE 1/200","Maquette","Travaux personnels","03.2026"],
-  ["PAVILLON ÉPHÉMÈRE","Architecture","Concours","01.2026"],
-  ["CARNET DE VOYAGE","Dessin","Travaux personnels","2025"],
-  ["RÉHABILITATION D’UNE FRICHE","Recherche","Mémoire","2025"],
-  ["COUPE-MAQUETTE","Maquette","Atelier","11.2025"],
-  ["RELEVÉS À L’ENCRE","Dessin","Cours de représentation","2024"]
-];
-const grid=document.getElementById("grid");
-projects.forEach(([t,c,s,d])=>{
-  const a=document.createElement("a");
-  a.className="card";a.href="#realisations";a.dataset.cat=c;
-  const ph=document.createElement("div");ph.className="ph";ph.textContent=c.toUpperCase();
-  const h=document.createElement("h3");h.textContent=t;
-  const p=document.createElement("p");p.textContent=s+" · "+d;
-  a.append(ph,h,p);grid.append(a);
-});
-document.getElementById("filters").addEventListener("click",e=>{
-  const b=e.target.closest("button");if(!b)return;
-  document.querySelectorAll("#filters button").forEach(x=>x.classList.toggle("on",x===b));
-  document.querySelectorAll(".card").forEach(c=>c.classList.toggle("hide",b.dataset.f!=="all"&&c.dataset.cat!==b.dataset.f));
-});
-</script>
+    <div id="realisations">
+
+      <div class="filters" id="filters">
+        <button class="on" data-f="all">TOUS</button>
+        <button data-f="Architecture">ARCHITECTURE</button>
+        <button data-f="Maquette">MAQUETTE</button>
+        <button data-f="Dessin">DESSIN</button>
+        <button data-f="Recherche">RECHERCHE</button>
+      </div>
+
+      <div class="grid" id="grid"></div>
+
+    </div>
+
+
+    <!-- ==========================================
+         À PROPOS
+         ========================================== -->
+
+    <section class="pad" id="apropos">
+
+      <h2>À PROPOS</h2>
+
+      <div class="about">
+
+        <div class="ph">PORTRAIT</div>
+
+        <div>
+
+          <p>
+            Je m’appelle Ninon, étudiante en architecture à l’école de Malaquais.
+            Ma pratique associe la réflexion conceptuelle et la fabrication manuelle :
+            chaque projet est pour moi l’occasion d’explorer un lieu,
+            une matière et un usage.
+          </p>
+
+          <p>
+            Je recherche actuellement un stage de 10000h à partir de hier.
+          </p>
+
+          <ul class="skills">
+            <li>AutoCAD</li>
+            <li>Rhino</li>
+            <li>Revit</li>
+            <li>SketchUp</li>
+            <li>Adobe Suite</li>
+            <li>Maquette</li>
+            <li>Dessin à la main</li>
+          </ul>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==========================================
+         CONTACT
+         ========================================== -->
+
+    <section class="pad contact" id="contact">
+
+      <h2>CONTACT</h2>
+
+      <a class="big" href="mailto:Contact.Job.Ninon@gmail.com">
+        Contact.Job.Ninon@gmail.com
+      </a>
+
+      <ul>
+        <li><a href="#contact">INSTAGRAM</a></li>
+        <li><a href="#contact">LINKEDIN</a></li>
+        <li><a href="#contact">CV (PDF)</a></li>
+      </ul>
+
+    </section>
+
+  </main>
+
+
+  <!-- ==========================================
+       PIED DE PAGE
+       ========================================== -->
+
+  <footer>
+    <span>© Ninon portfolio 2026</span>
+    <span>Mentions légales</span>
+  </footer>
+
+
+  <!-- ==========================================
+       SCRIPT : menu burger + liste des projets + filtres
+       ========================================== -->
+
+  <script>
+
+    /* ---- MENU BURGER (téléphone) ---- */
+
+    const entete = document.getElementById("entete");
+    const boutonMenu = document.getElementById("menu-bouton");
+
+    function changerMenu(ouvrir) {
+      entete.classList.toggle("ouvert", ouvrir);
+      boutonMenu.setAttribute("aria-expanded", ouvrir);
+      boutonMenu.setAttribute("aria-label", ouvrir ? "Fermer le menu" : "Ouvrir le menu");
+    }
+
+    /* Clic sur le bouton : ouvre ou ferme */
+    boutonMenu.addEventListener("click", function () {
+      changerMenu(!entete.classList.contains("ouvert"));
+    });
+
+    /* Clic sur un lien du menu : le menu se referme */
+    document.querySelectorAll("#menu a").forEach(function (lien) {
+      lien.addEventListener("click", function () {
+        changerMenu(false);
+      });
+    });
+
+    /* Touche Échap : le menu se referme */
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") changerMenu(false);
+    });
+
+    /* Si l’écran s’agrandit (rotation de la tablette), on referme le menu */
+    window.matchMedia("(min-width: 701px)").addEventListener("change", function () {
+      changerMenu(false);
+    });
+
+
+    /* ---- LISTE DES PROJETS ----
+       Format de chaque ligne :
+       ["TITRE", "Catégorie", "Contexte", "Date"]
+
+       Catégories possibles : Architecture, Maquette, Dessin, Recherche */
+
+    const projects = [
+
+      ["MAISON SUR PILOTIS",         "Architecture", "Projet de studio, L3",     "09.2026"],
+
+      ["BIBLIOTHÈQUE DE QUARTIER",   "Architecture", "Projet de studio, M1",     "06.2026"],
+
+      ["MAQUETTE 1/200",             "Maquette",     "Travaux personnels",       "03.2026"],
+
+      ["PAVILLON ÉPHÉMÈRE",          "Architecture", "Concours",                 "01.2026"],
+
+      ["CARNET DE VOYAGE",           "Dessin",       "Travaux personnels",       "2025"],
+
+      ["RÉHABILITATION D’UNE FRICHE","Recherche",    "Mémoire",                  "2025"],
+
+      ["COUPE-MAQUETTE",             "Maquette",     "Atelier",                  "11.2025"],
+
+      ["RELEVÉS À L’ENCRE",          "Dessin",       "Cours de représentation",  "2024"]
+
+    ];
+
+
+    /* ---- AFFICHAGE DES PROJETS DANS LA GRILLE ---- */
+
+    const grid = document.getElementById("grid");
+
+    projects.forEach(function (projet) {
+
+      const titre     = projet[0];
+      const categorie = projet[1];
+      const contexte  = projet[2];
+      const date      = projet[3];
+
+      const carte = document.createElement("a");
+      carte.className = "card";
+      carte.href = "#realisations";
+      carte.dataset.cat = categorie;
+
+      const image = document.createElement("div");
+      image.className = "ph";
+      image.textContent = categorie.toUpperCase();
+
+      const h3 = document.createElement("h3");
+      h3.textContent = titre;
+
+      const p = document.createElement("p");
+      p.textContent = contexte + " · " + date;
+
+      carte.append(image, h3, p);
+      grid.append(carte);
+
+    });
+
+
+    /* ---- FILTRES PAR CATÉGORIE ---- */
+
+    document.getElementById("filters").addEventListener("click", function (e) {
+
+      const bouton = e.target.closest("button");
+
+      if (!bouton) return;
+
+      /* met en surbrillance le bouton cliqué */
+      document.querySelectorAll("#filters button").forEach(function (b) {
+        b.classList.toggle("on", b === bouton);
+      });
+
+      /* affiche ou cache les projets */
+      document.querySelectorAll(".card").forEach(function (carte) {
+
+        const toutAfficher = bouton.dataset.f === "all";
+        const memeCategorie = carte.dataset.cat === bouton.dataset.f;
+
+        carte.classList.toggle("hide", !toutAfficher && !memeCategorie);
+
+      });
+
+    });
+
+  </script>
+
 </body>
+
 </html>
